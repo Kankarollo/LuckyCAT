@@ -40,6 +40,10 @@ class StatsCollector(Process):
         logger.debug(f'Received stats {str(stats)}')
 
     def update_external_stats(self, stats):
+        job_id = "test123"
+        print(f"[DEBUG]: Received stats: {stats}")
+        stats['job_name'] = "AFL_test"
+        # TODO Exception if there is invalid job_name in mongoDB.
         try:
             job_doc = Job.objects.get(name=stats['job_name'])
             job_id = job_doc.id
@@ -70,6 +74,7 @@ class StatsCollector(Process):
         logger.info('Starting StatsCollector...')
         connect(luckycat_global_config.db_name, host=luckycat_global_config.db_host)
         self.channel.basic_consume(self.on_message, self.queue_name)
+        # self.channel.basic_consume(queue=self.queue_name, on_message_callback=self.on_message, auto_ack=True)
         try:
             self.channel.start_consuming()
         except KeyboardInterrupt:

@@ -13,7 +13,7 @@ log_level = logging.DEBUG
 # afl configs
 base_path = '/tmp/afl-ramdisk'
 cmd = os.path.join(base_path, 'ph7/ph7') + ' @@'
-fuzzers = 4
+fuzzers = 2
 collect_threads = 4
 memory_limit = 1024
 input_dir = os.path.join(base_path, 'ph7/fuzzing_in/')
